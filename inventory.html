@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ALDECKOT — Inventário</title>
+  <link rel="stylesheet" href="inventory.css">
+</head>
+<body class="inventory-open" data-inventory-page="true">
+  <div class="app"><main>
+    <div id="app" class="inventory-shell">
+      <header class="inventory-header"><div class="inventory-heading"><div class="inventory-heading-icon">◇</div><div><h1>INVENTÁRIO</h1><p>Aldeckot — Controle de Equipamentos</p></div></div><div class="inventory-header-actions"><button class="inventory-header-action">⇩</button><button class="inventory-header-action">▱</button><button class="inventory-header-action add">⊕</button><button class="inventory-header-action">⟳</button><span class="inventory-sync">Sincronizado <i></i></span><a class="inventory-header-action" href="index.html" style="text-decoration:none">⌂</a></div></header>
+      <div class="inventory-layout"><aside class="inventory-panel inventory-tables"><div class="inventory-panel-title">Tabelas <button class="inventory-table-add">+</button></div><p style="margin:8px;color:#aaa5ba;font-size:11px">Nenhuma tabela criada.</p></aside><main class="inventory-panel inventory-empty-state"><div><div class="empty-cubes">◇ ◇</div><h2>Nenhuma tabela selecionada</h2><p>Crie uma tabela para começar a organizar os equipamentos.</p><button>＋ Criar nova tabela</button></div></main><aside class="inventory-charts"><section class="inventory-panel inventory-chart"><h3>Distribuição por Status</h3><div class="inventory-chart-stage"></div></section><section class="inventory-panel inventory-chart"><h3>Distribuição por Situação</h3><div class="inventory-chart-stage"></div></section></aside></div>
+    </div>
+  </main></div>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="supabase-config.js"></script>
+  <script src="supabase-client.js"></script>
+  <script src="theme.js"></script>
+  <script src="inventory.js"></script>
+  <script>if (window.openInventory) window.openInventory();</script>
+</body>
+</html>
