@@ -19,15 +19,30 @@
     return configuration;
   };
 
+  const hasStaticConfiguration = hasConfiguration(window.ALDECKOT_SUPABASE_CONFIG);
+  const isLocalFile = window.location.protocol === 'file:';
+
+  // Em desenvolvimento local o arquivo de configuração é carregado diretamente.
+  // No Vercel, a rota de runtime cobre tanto builds estáticos quanto previews.
+  const configurationSource = hasStaticConfiguration
+    ? Promise.resolve(window.ALDECKOT_SUPABASE_CONFIG)
+    : isLocalFile
+      ? loadStaticFallback()
+      : loadVercelConfiguration().catch(error => {
+          // Mantém o motivo disponível para diagnóstico sem expor nenhuma credencial.
+          window.ALDECKOT_SUPABASE_CONFIG_ERROR = error.message;
+          return loadStaticFallback();
+        });
+
   // O Supabase client aguarda esta promessa antes de criar a conexão.
-  window.ALDECKOT_SUPABASE_CONFIG_READY = loadVercelConfiguration()
-    .catch(error => {
-      // Mantém o motivo disponível para diagnóstico sem expor nenhuma credencial.
-      window.ALDECKOT_SUPABASE_CONFIG_ERROR = error.message;
-      return loadStaticFallback();
-    })
+  window.ALDECKOT_SUPABASE_CONFIG_READY = configurationSource
     .then(configuration => {
       window.ALDECKOT_SUPABASE_CONFIG = configuration || window.ALDECKOT_SUPABASE_CONFIG || {};
+      if (!hasConfiguration(window.ALDECKOT_SUPABASE_CONFIG) && !window.ALDECKOT_SUPABASE_CONFIG_ERROR) {
+        window.ALDECKOT_SUPABASE_CONFIG_ERROR = isLocalFile
+          ? 'Não foi possível carregar o arquivo local supabase-config.js.'
+          : 'A configuração pública do Supabase não foi encontrada.';
+      }
       return window.ALDECKOT_SUPABASE_CONFIG;
     });
 })();
