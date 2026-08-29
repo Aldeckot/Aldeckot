@@ -21,7 +21,11 @@
 
   // O Supabase client aguarda esta promessa antes de criar a conexão.
   window.ALDECKOT_SUPABASE_CONFIG_READY = loadVercelConfiguration()
-    .catch(loadStaticFallback)
+    .catch(error => {
+      // Mantém o motivo disponível para diagnóstico sem expor nenhuma credencial.
+      window.ALDECKOT_SUPABASE_CONFIG_ERROR = error.message;
+      return loadStaticFallback();
+    })
     .then(configuration => {
       window.ALDECKOT_SUPABASE_CONFIG = configuration || window.ALDECKOT_SUPABASE_CONFIG || {};
       return window.ALDECKOT_SUPABASE_CONFIG;

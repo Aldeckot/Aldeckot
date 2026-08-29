@@ -43,7 +43,7 @@ NEXT_PUBLIC_SUPABASE_URL=https://seu-project-ref.supabase.co
 NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sua-chave-publishable
 ```
 
-O arquivo `vercel.json` executa a geração de `outputs/aldeckot/supabase-config.js` durante cada build e publica a pasta `outputs/aldeckot`. Além disso, a rota `/api/supabase-config` lê essas mesmas variáveis durante a execução no Vercel; portanto, o ALDECKOT não depende do arquivo estático para conectar. Não use `service_role` no Vercel nem no frontend.
+O arquivo `vercel.json` executa a geração de `outputs/aldeckot/supabase-config.js` durante cada build e publica a pasta `outputs/aldeckot`. Além disso, a rota `/api/supabase-config` lê essas mesmas variáveis durante a execução no Vercel; portanto, o ALDECKOT não depende do arquivo estático para conectar. A função também está presente dentro de `outputs/aldeckot/api`, cobrindo projetos configurados com essa pasta como Root Directory. Não use `service_role` no Vercel nem no frontend.
 
 ## 3. Abrir o site
 

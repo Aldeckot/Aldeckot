@@ -46,7 +46,10 @@
     bootPromise = (async () => {
       await (window.ALDECKOT_SUPABASE_CONFIG_READY || Promise.resolve());
       const configuration = window.ALDECKOT_SUPABASE_CONFIG || {};
-      if (!configured(configuration)) fail('Supabase não configurado. Verifique as variáveis públicas do Supabase no Vercel.');
+      if (!configured(configuration)) {
+        const reason = window.ALDECKOT_SUPABASE_CONFIG_ERROR;
+        fail(reason ? `Supabase não configurado. ${reason}` : 'Supabase não configurado. Verifique as variáveis públicas do Supabase no Vercel.');
+      }
       if (!window.supabase?.createClient) fail('Não foi possível carregar a biblioteca do Supabase. Verifique sua conexão com a internet.');
 
       client = window.supabase.createClient(configuration.url, configuration.publishableKey, {
