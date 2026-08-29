@@ -34,6 +34,17 @@ Encontre ambos os valores em **Supabase → Project Settings → API**. Use some
 
 O comando cria `supabase-config.js`, que é ignorado pelo Git. É esse arquivo que o navegador lê; o `.env` nunca é enviado ao navegador diretamente.
 
+## Publicação no Vercel
+
+Mantenha a **Root Directory** do projeto como a raiz do repositório e cadastre, em **Settings → Environment Variables**, as duas variáveis abaixo para os ambientes necessários (Production, Preview e Development):
+
+```env
+NEXT_PUBLIC_SUPABASE_URL=https://seu-project-ref.supabase.co
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=sua-chave-publishable
+```
+
+O arquivo `vercel.json` executa a geração de `outputs/aldeckot/supabase-config.js` durante cada build e publica a pasta `outputs/aldeckot`. Além disso, a rota `/api/supabase-config` lê essas mesmas variáveis durante a execução no Vercel; portanto, o ALDECKOT não depende do arquivo estático para conectar. Não use `service_role` no Vercel nem no frontend.
+
 ## 3. Abrir o site
 
 Abra a pasta `outputs\aldeckot` usando um servidor local (por exemplo, Live Server) e navegue para `index.html`. Evite `file://` para a versão conectada, pois navegadores podem bloquear a comunicação segura com o Supabase nesse modo.
